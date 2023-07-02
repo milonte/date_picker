@@ -1,0 +1,50 @@
+$inputWidth: 200px;
+$inputHeight: 25px;
+$inputPaddingX: 2px;
+$inputPaddingY: 1px;
+$inputBorderWidth: 2px;
+
+.App {
+  margin: 10px;
+  position: relative;
+
+  #datetime_input {
+    position: relative;
+    width: $inputWidth;
+    height: $inputHeight;
+    border: $inputBorderWidth solid #ccc;
+  }
+
+  #datetime_container {
+
+    .controls {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    #dates_table {
+      position: absolute;
+      top: calc($inputHeight + 6px);
+      left: 0;
+      display: none;
+      background-color: red;
+      min-height: 50px;
+      min-width: calc($inputWidth + $inputPaddingX * 2 + $inputBorderWidth * 2);
+
+      &.show {
+        display: block;
+      }
+
+      .current_day {
+        background-color: cyan;
+      }
+
+      .month_out {
+        background-color: green;
+      }
+    }
+
+
+  }
+}
