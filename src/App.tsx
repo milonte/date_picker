@@ -12,12 +12,14 @@ export default function App(): ReactElement {
 
   const lastDayOfPrevMonth = new Date(year, month, 0)
 
-
   const days: string[] = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
   const months: string[] = [
     "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
     "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
   ]
+
+  const range = (start: number, stop: number, step: number) =>
+    Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step);
 
   useEffect(() => {
     isCalendarShow ? tableElt?.classList.add('show') : tableElt?.classList.remove('show')
@@ -71,7 +73,10 @@ export default function App(): ReactElement {
               className={`selectable ${date.getMonth() !== month ? 'month_out' :
                 date.toDateString() === today.toDateString() ? 'current_day' : ''}
                 `}
-              onClick={() => { selectDate(date) }}
+              onClick={() => {
+                selectDate(date)
+                setCalendarShow(false)
+              }}
             >
               {date.getDate()}
             </td>)
@@ -88,64 +93,33 @@ export default function App(): ReactElement {
     </tbody>
   );
 
-  /* const tableBodyTwo = () => {
-    const lastDayOfCurrentMonth = new Date(year, month + 1, 0)
-    const tableItems = []
-
-    for (let i = 0; i < 6; i++) {
-      const rowItems = []
-      for (let j = 0; j < 7; j++) {
-        const currentIndex = (i * 7 + j) - lastDayOfPrevMonth.getDay()
-
-        const isPreviousMonth: boolean = 0 > currentIndex
-        const isNextMonth: boolean = lastDayOfCurrentMonth.getDate() < currentIndex + 1
-        const isCurrentDay: boolean = currentIndex + 1 === today.getDate()
-          && !isPreviousMonth && !isNextMonth
-          && month === today.getMonth() && year === today.getFullYear();
-
-        rowItems.push(
-          <td key={'date' + i + j}
-            className={`selectable ${isPreviousMonth || isNextMonth ? 'month_out' :
-              isCurrentDay ? 'current_day' : ''}
-                `}
-            onClick={() => {
-              selectDate(new Date(
-                year,
-                month,
-                currentIndex + 1
-              ))
-            }}>
-            {currentIndex + 1 +
-              (isPreviousMonth ? lastDayOfPrevMonth.getDate() :
-                isNextMonth ? -lastDayOfCurrentMonth.getDate()
-                  : 0)}
-          </td>)
-
-      }
-      tableItems.push(<tr>{rowItems}</tr>)
-    }
-
-    return <tbody>{tableItems}</tbody>
-  } */
-
   return (
     <div className="App">
-      <div id="datetime_container"
-        onFocus={() => setCalendarShow(true)}
-        onBlur={() => setCalendarShow(false)}
-        onMouseDown={(e) => {
-          // prevent focus loose
-          e.preventDefault()
-          document.getElementById('datetime_input')?.focus()
-        }}
-      >
-        <input type='text' id="datetime_input"></input>
+      <div id="datetime_container">
+        <input type='text' id="datetime_input" onFocus={() => setCalendarShow(true)}></input>
         <div id="dates_table">
-
           <div className='controls'>
             <div className='left' onClick={() => setMonth(month - 1)}>Prev</div>
-            <span>{months[month]} - {year}</span>
+            <div className='home' onClick={() => {
+              setMonth(today.getMonth())
+              setYear(today.getFullYear())
+            }}>Home</div>
+            <select className='month_select' value={month} onChange={(e) => { setMonth(Number(e.target.value)) }}>
+              {months.map((mo, key) => {
+                return <option value={key}>{mo}</option>
+              })}
+            </select>
+            -
+            <select className='year_select' value={year} onChange={(e) => { setYear(Number(e.target.value)) }}>
+              {[[Array.from(
+                { length: ((year + 100) - (year - 100)) },
+                (_, i) => {
+                  const value = year - 100 + i
+                  return <option value={value}>{value}</option>
+                })]]}
+            </select>
             <div className='right' onClick={() => setMonth(month + 1)}>Next</div>
+            <div className='close' onClick={() => setCalendarShow(false)}>Close</div>
           </div>
           <table>
             {tableHead}

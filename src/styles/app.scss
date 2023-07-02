@@ -21,9 +21,18 @@ $inputBorderWidth: 2px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+
+      select {
+        background-color: transparent;
+        text-decoration: none;
+        border: none;
+        text-align: right;
+      }
     }
 
     #dates_table {
+
+      text-align: center;
       position: absolute;
       top: calc($inputHeight + 6px);
       left: 0;
@@ -33,7 +42,9 @@ $inputBorderWidth: 2px;
       min-width: calc($inputWidth + $inputPaddingX * 2 + $inputBorderWidth * 2);
 
       &.show {
-        display: block;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
       }
 
       .current_day {
