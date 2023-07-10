@@ -1,13 +1,28 @@
 export default function TableBody(props: {
-    month: number,
-    year: number,
-    minDate: Date,
-    maxDate: Date,
+    month: number
+    year: number
+    minDate: Date
+    maxDate: Date
+    disabledDates: number[]
     handleClick: Function
 }) {
 
     const lastDayOfPrevMonth = new Date(props.year, props.month, 0)
     const today = new Date()
+
+    function isDateSelectable(targetDate: Date): boolean {
+
+        if (props.disabledDates.includes(targetDate.getUTCDay())) {
+            return false
+        }
+
+        if (targetDate < props.minDate ||
+            targetDate > props.maxDate) {
+            return false
+        }
+
+        return true
+    }
 
     return (
         <tbody>
@@ -23,8 +38,7 @@ export default function TableBody(props: {
                         props.month,
                         (row * 7 + col) - lastDayOfPrevMonth.getDay() + 1,
                     )
-                    const isSelectable: boolean = currentDate >= props.minDate &&
-                        currentDate <= props.maxDate
+                    const isSelectable: boolean = isDateSelectable(currentDate)
 
                     daysItems.push(
                         <td key={'currentDate' + row + col}

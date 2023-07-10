@@ -11,6 +11,7 @@ export default function DateTimePicker(props: {
     defaultDate?: Date
     minDate?: Date
     maxDate?: Date
+    disabledDays?: number[]
     minHour?: string
     maxHour?: string
     hourStep?: number
@@ -20,10 +21,11 @@ export default function DateTimePicker(props: {
     const defaultDate: Date = props.defaultDate || new Date()
     const inputElt = document.getElementById('datetime_input')
     const tableElt = document.getElementById('controls_container');
+
     const hourSteps: number = props.hourStep && props.hourStep > 0 ? props.hourStep : 30
     const minHour: string = props.minHour || '00:00'
     const maxHour: string = props.maxHour || '23:59'
-
+    const disabledDays = props.disabledDays || []
     const minDate = props.minDate || new Date(defaultDate.getFullYear() - 100, 0, 0)
     const maxDate = props.maxDate || new Date(defaultDate.getFullYear() + 100, 0, 0)
     const [isCalendarShow, showCalendar] = useState<boolean>(false);
@@ -87,6 +89,7 @@ export default function DateTimePicker(props: {
                                 year={searchYear}
                                 minDate={minDate}
                                 maxDate={maxDate}
+                                disabledDates={disabledDays}
                                 handleClick={(current: Date) => {
                                     setDate(current)
                                     if (!props.timePicker) {
