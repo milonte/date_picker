@@ -1,13 +1,13 @@
 export default function TimePicker(props: {
     hourSteps: number
-    minHour: string,
-    maxHour: string,
+    minDayHour: string,
+    maxDayHour: string,
     handleClick: Function
 }) {
 
     const steps = 60 / props.hourSteps
-    const [minHour, minMinute]: string[] = props.minHour.split(':')
-    const [maxHour, maxMinute]: string[] = props.maxHour.split(':')
+    const [minHour, minMinute]: string[] = props.minDayHour.split(':')
+    const [maxHour, maxMinute]: string[] = props.maxDayHour.split(':')
     const minTime = Number(minHour) + Number(minMinute) / 60
     const maxTime = Number(maxHour) + Number(maxMinute) / 60
 

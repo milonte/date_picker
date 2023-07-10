@@ -12,8 +12,8 @@ export default function DateTimePicker(props: {
     minDate?: Date
     maxDate?: Date
     disabledWeekDays?: number[]
-    minHour?: string
-    maxHour?: string
+    minDayHour?: string
+    maxDayHour?: string
     hourStep?: number
     onUpdatedDate?: Function
 },): ReactElement {
@@ -23,8 +23,8 @@ export default function DateTimePicker(props: {
     const tableElt = document.getElementById('controls_container');
 
     const hourSteps: number = props.hourStep && props.hourStep > 0 ? props.hourStep : 30
-    const minHour: string = props.minHour || '00:00'
-    const maxHour: string = props.maxHour || '23:59'
+    const minDayHour: string = props.minDayHour || '00:00'
+    const maxDayHour: string = props.maxDayHour || '23:59'
     const disabledWeekDays = props.disabledWeekDays || []
     const minDate = props.minDate || new Date(defaultDate.getFullYear() - 100, 0, 0)
     const maxDate = props.maxDate || new Date(defaultDate.getFullYear() + 100, 0, 0)
@@ -102,8 +102,8 @@ export default function DateTimePicker(props: {
                     {props.timePicker ? (
                         <TimePicker
                             hourSteps={hourSteps}
-                            minHour={minHour}
-                            maxHour={maxHour}
+                            minDayHour={minDayHour}
+                            maxDayHour={maxDayHour}
                             handleClick={(hour: number, minutes: number) => {
                                 if (!date) {
                                     setDate(new Date(

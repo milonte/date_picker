@@ -13,8 +13,8 @@ root.render(
     <DatePicker datePicker timePicker hourStep={15}
       minDate={new Date(2023, 6, 10)}
       maxDate={new Date(2024, 6, 11)}
-      minHour='18:52'
-      maxHour='19:45'
+      minDayHour='18:52'
+      maxDayHour='19:45'
       disabledWeekDays={[5, 6]}
       onUpdatedDate={(date: Date) => { console.log(date) }}
     />
