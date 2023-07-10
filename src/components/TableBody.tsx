@@ -1,11 +1,14 @@
 export default function TableBody(props: {
     month: number,
     year: number,
+    minDate: Date,
+    maxDate: Date,
     handleClick: Function
 }) {
 
     const lastDayOfPrevMonth = new Date(props.year, props.month, 0)
     const today = new Date()
+    console.log(props)
 
     return (
         <tbody>
@@ -19,16 +22,20 @@ export default function TableBody(props: {
                     const currentDate = new Date(
                         props.year,
                         props.month,
-                        (row * 7 + col) - lastDayOfPrevMonth.getDay() + 1
+                        (row * 7 + col) - lastDayOfPrevMonth.getDay() + 1,
                     )
+                    const isSelectable: boolean = currentDate >= props.minDate &&
+                        currentDate <= props.maxDate
 
                     daysItems.push(
                         <td key={'currentDate' + row + col}
-                            className={`selectable ${currentDate.getMonth() !== props.month ? 'month_out' :
-                                currentDate.toDateString() === today.toDateString() ? 'current_day' : ''}
+                            className={`
+                            ${isSelectable ? 'selectable' : ''}
+                            ${currentDate.getMonth() !== props.month ? 'month_out' :
+                                    currentDate.toDateString() === today.toDateString() ? 'current_day' : ''}
               `}
                             onClick={() => {
-                                props.handleClick(currentDate)
+                                if (isSelectable) props.handleClick(currentDate)
                             }}
                         >
                             {currentDate.getDate()}

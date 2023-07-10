@@ -2,6 +2,8 @@ export default function Controls(props: {
     defaultDate: Date,
     searchMonth: number,
     searchYear: number,
+    minDate: Date,
+    maxDate: Date,
     handleClickClose: Function,
     handleChangeMonth: Function,
     handleChangeYear: Function
@@ -28,9 +30,9 @@ export default function Controls(props: {
             <select className='year_select' value={props.searchYear}
                 onChange={(e) => { props.handleChangeYear(Number(e.target.value)) }}>
                 {[[Array.from(
-                    { length: ((props.searchYear + 100) - (props.searchYear - 100)) },
+                    { length: (props.maxDate.getFullYear() - props.minDate.getFullYear()) + 1 },
                     (_, i) => {
-                        const value = props.searchYear - 100 + i
+                        const value = props.minDate.getFullYear() + i
                         return <option value={value}>{value}</option>
                     })]]}
             </select>
