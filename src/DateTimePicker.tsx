@@ -5,15 +5,16 @@ import TableBody from './components/TableBody';
 import TimePicker from './components/TimePicker';
 import Controls from './components/Controls';
 
-export default function DatePicker(props: {
-  type: string
+export default function DateTimePicker(props: {
+  datePicker: boolean
+  timePicker: boolean
   defaultDate?: Date
-}): ReactElement {
+  onUpdatedDate?: Function
+},): ReactElement {
 
   const defaultDate: Date = props.defaultDate || new Date()
   const inputElt = document.getElementById('datetime_input')
   const tableElt = document.getElementById('controls_container');
-  const isTimerEnabled: boolean = props.type === 'datetime' || props.type === 'time' ? true : false
 
   const [isCalendarShow, showCalendar] = useState<boolean>(false);
   const [searchMonth, setSearchMonth] = useState<number>(defaultDate.getMonth())
@@ -25,6 +26,9 @@ export default function DatePicker(props: {
 
     if (date) {
       inputElt?.setAttribute('value', date.toLocaleString())
+      if (props.onUpdatedDate) {
+        props.onUpdatedDate(date)
+      }
     }
 
     if (0 > searchMonth) {
@@ -45,34 +49,40 @@ export default function DatePicker(props: {
       }}></input>
 
       <div id="controls_container">
-        <Controls
-          defaultDate={defaultDate}
-          searchMonth={searchMonth}
-          searchYear={searchYear}
-          handleChangeMonth={(month: number) => {
-            setSearchMonth(month)
-          }}
-          handleChangeYear={(year: number) => {
-            setSearchYear(year)
-          }}
-          handleClickClose={() => {
-            showCalendar(false)
-          }}
-        />
+        {props.datePicker ? (
+
+          <Controls
+            defaultDate={defaultDate}
+            searchMonth={searchMonth}
+            searchYear={searchYear}
+            handleChangeMonth={(month: number) => {
+              setSearchMonth(month)
+            }}
+            handleChangeYear={(year: number) => {
+              setSearchYear(year)
+            }}
+            handleClickClose={() => {
+              showCalendar(false)
+            }}
+          />
+        ) : null}
         <div className='body_controls'>
-          <table>
-            <TableHeader />
-            <TableBody
-              month={searchMonth}
-              year={searchYear}
-              handleClick={(current: Date) => {
-                setDate(current)
-                if (!isTimerEnabled) {
-                  showCalendar(false)
-                }
-              }} />
-          </table>
-          {isTimerEnabled ? (
+          {props.datePicker ? (
+            <table>
+              <TableHeader />
+              <TableBody
+                month={searchMonth}
+                year={searchYear}
+                handleClick={(current: Date) => {
+                  setDate(current)
+                  if (!props.timePicker) {
+                    showCalendar(false)
+                  }
+                }} />
+            </table>
+          ) : null}
+
+          {props.timePicker ? (
             <TimePicker
               handleClick={(hour: number, halfHour: number) => {
                 if (!date) {

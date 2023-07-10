@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import DatePicker from './DatePicker';
+import DatePicker from './DateTimePicker';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -10,7 +10,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <DatePicker type={'datetime'} />
+    <DatePicker datePicker timePicker={false}
+      onUpdatedDate={(date: Date) => { console.log(date) }}
+    />
   </React.StrictMode>
 );
 
