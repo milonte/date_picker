@@ -3,7 +3,7 @@ export default function TableBody(props: {
     year: number
     minDate: Date
     maxDate: Date
-    disabledDates: number[]
+    disabledWeekDays: number[]
     handleClick: Function
 }) {
 
@@ -12,7 +12,7 @@ export default function TableBody(props: {
 
     function isDateSelectable(targetDate: Date): boolean {
 
-        if (props.disabledDates.includes(targetDate.getUTCDay())) {
+        if (props.disabledWeekDays.includes(targetDate.getUTCDay())) {
             return false
         }
 

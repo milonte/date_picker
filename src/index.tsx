@@ -15,7 +15,7 @@ root.render(
       maxDate={new Date(2024, 6, 11)}
       minHour='18:52'
       maxHour='19:45'
-      disabledDays={[5, 6]}
+      disabledWeekDays={[5, 6]}
       onUpdatedDate={(date: Date) => { console.log(date) }}
     />
   </React.StrictMode>
