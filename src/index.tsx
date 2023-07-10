@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <DatePicker datePicker timePicker={false}
+    <DatePicker datePicker timePicker hourStep={15}
       onUpdatedDate={(date: Date) => { console.log(date) }}
     />
   </React.StrictMode>

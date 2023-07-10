@@ -9,12 +9,14 @@ export default function DateTimePicker(props: {
   datePicker: boolean
   timePicker: boolean
   defaultDate?: Date
+  hourStep?: number
   onUpdatedDate?: Function
 },): ReactElement {
 
   const defaultDate: Date = props.defaultDate || new Date()
   const inputElt = document.getElementById('datetime_input')
   const tableElt = document.getElementById('controls_container');
+  const hourSteps: number = props.hourStep && props.hourStep > 0 ? props.hourStep : 30
 
   const [isCalendarShow, showCalendar] = useState<boolean>(false);
   const [searchMonth, setSearchMonth] = useState<number>(defaultDate.getMonth())
@@ -84,13 +86,20 @@ export default function DateTimePicker(props: {
 
           {props.timePicker ? (
             <TimePicker
-              handleClick={(hour: number, halfHour: number) => {
+              hourSteps={hourSteps}
+              handleClick={(hour: number, minutes: number) => {
                 if (!date) {
-                  setDate(defaultDate)
+                  setDate(new Date(
+                    defaultDate.getFullYear(),
+                    defaultDate.getMonth(),
+                    defaultDate.getDate(),
+                    hour,
+                    minutes
+                  ))
                 }
-                showCalendar(false)
                 date?.setHours(hour)
-                date?.setMinutes(halfHour)
+                date?.setMinutes(minutes)
+                showCalendar(false)
               }}
             />
           ) : null}

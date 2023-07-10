@@ -1,24 +1,22 @@
 export default function TimePicker(props: {
+    hourSteps: number
     handleClick: Function
 }) {
 
-    const today = new Date()
+    const steps = 60 / props.hourSteps
+
     return (
         <div className='hours_container'>
-            {[[Array.from({ length: 48 }, (_, i) => {
-                const hour = Math.floor(i / 2)
-                const halfHour: number = (i % 2) * 30
-                const isPastHalfHour = today.getMinutes() >= 30 ? true : false
+            {[[Array.from({ length: 24 * steps }, (_, i) => {
+                const hour = Math.floor(i / steps)
+                const minutes: number = Math.floor((i % steps) * props.hourSteps)
 
-                return <div className={`selectable hour
-              ${!isPastHalfHour ?
-                        (halfHour === 30 && hour === today.getHours() ? 'current_hour' : '') :
-                        halfHour === 0 && hour === today.getHours() + 1 ? 'current_hour' : ''}`}
+                return <div className={`selectable hour`}
                     onClick={() => {
-                        props.handleClick(hour, halfHour)
+                        props.handleClick(hour, minutes)
                     }
                     }>
-                    {hour}:{halfHour.toString().padStart(2, '0')}
+                    {hour}:{minutes.toString().padStart(2, '0')}
                 </div>
             })]]}
         </div>
