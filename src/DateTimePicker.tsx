@@ -11,6 +11,8 @@ export default function DateTimePicker(props: {
     defaultDate?: Date
     minDate?: Date
     maxDate?: Date
+    minHour?: string
+    maxHour?: string
     hourStep?: number
     onUpdatedDate?: Function
 },): ReactElement {
@@ -19,6 +21,9 @@ export default function DateTimePicker(props: {
     const inputElt = document.getElementById('datetime_input')
     const tableElt = document.getElementById('controls_container');
     const hourSteps: number = props.hourStep && props.hourStep > 0 ? props.hourStep : 30
+    const minHour: string = props.minHour || '00:00'
+    const maxHour: string = props.maxHour || '23:59'
+
     const minDate = props.minDate || new Date(defaultDate.getFullYear() - 100, 0, 0)
     const maxDate = props.maxDate || new Date(defaultDate.getFullYear() + 100, 0, 0)
     const [isCalendarShow, showCalendar] = useState<boolean>(false);
@@ -94,6 +99,8 @@ export default function DateTimePicker(props: {
                     {props.timePicker ? (
                         <TimePicker
                             hourSteps={hourSteps}
+                            minHour={minHour}
+                            maxHour={maxHour}
                             handleClick={(hour: number, minutes: number) => {
                                 if (!date) {
                                     setDate(new Date(

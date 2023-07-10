@@ -1,19 +1,29 @@
 export default function TimePicker(props: {
     hourSteps: number
+    minHour: string,
+    maxHour: string,
     handleClick: Function
 }) {
 
     const steps = 60 / props.hourSteps
+    const [minHour, minMinute]: string[] = props.minHour.split(':')
+    const [maxHour, maxMinute]: string[] = props.maxHour.split(':')
+    const minTime = Number(minHour) + Number(minMinute) / 60
+    const maxTime = Number(maxHour) + Number(maxMinute) / 60
 
     return (
         <div className='hours_container'>
             {[[Array.from({ length: 24 * steps }, (_, i) => {
                 const hour = Math.floor(i / steps)
                 const minutes: number = Math.floor((i % steps) * props.hourSteps)
-
-                return <div className={`selectable hour`}
+                const time = hour + minutes / 60
+                const isSelectable = time >= minTime && time <= maxTime
+                return <div className={`hour 
+                    ${isSelectable ? 'selectable' : ''}`}
                     onClick={() => {
-                        props.handleClick(hour, minutes)
+                        if (isSelectable) {
+                            props.handleClick(hour, minutes)
+                        }
                     }
                     }>
                     {hour}:{minutes.toString().padStart(2, '0')}

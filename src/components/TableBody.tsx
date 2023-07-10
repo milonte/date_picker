@@ -8,7 +8,6 @@ export default function TableBody(props: {
 
     const lastDayOfPrevMonth = new Date(props.year, props.month, 0)
     const today = new Date()
-    console.log(props)
 
     return (
         <tbody>
