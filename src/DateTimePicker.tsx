@@ -12,10 +12,12 @@ export default function DateTimePicker(props: {
     minDate?: Date
     maxDate?: Date
     disabledWeekDays?: number[]
+    reservedDates?: string[]
+    reservedDatesTimes?: Record<string, string[]> | null
     minDayHour?: string
     maxDayHour?: string
     hourStep?: number
-    onUpdatedDate?: Function
+    onUpdatedDate?: (date: Date) => void
 },): ReactElement {
 
     const defaultDate: Date = props.defaultDate || new Date()
@@ -85,11 +87,12 @@ export default function DateTimePicker(props: {
                         <table>
                             <TableHeader />
                             <TableBody
-                                month={searchMonth}
-                                year={searchYear}
+                                searchMonth={searchMonth}
+                                searchYear={searchYear}
                                 minDate={minDate}
                                 maxDate={maxDate}
                                 disabledWeekDays={disabledWeekDays}
+                                reservedDates={props.reservedDates || null}
                                 handleClick={(current: Date) => {
                                     setDate(current)
                                     if (!props.timePicker) {
@@ -104,6 +107,8 @@ export default function DateTimePicker(props: {
                             hourSteps={hourSteps}
                             minDayHour={minDayHour}
                             maxDayHour={maxDayHour}
+                            date={date || defaultDate}
+                            reservedDatesTimes={props.reservedDatesTimes || null}
                             handleClick={(hour: number, minutes: number) => {
                                 if (!date) {
                                     setDate(new Date(
