@@ -1,50 +1,69 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import './styles/datepicker.scss';
 import TableHeader from './components/TableHeader';
 import TableBody from './components/TableBody';
 import TimePicker from './components/TimePicker';
 import Controls from './components/Controls';
 
+/**
+ * DatePTimePicker
+ * @param {Object} props
+ * @param {boolean} props.datePicker Enable DatePicker | true
+ * @param {boolean} props.timePicker Enable TimePicker | true
+ * @param {Date} props.defaultDate Default  selected Date | now
+ * @param {Date} props.minDate Minimim Date value | now - 100 year
+ * @param {Date} props.maxDate Maximum Date Value | now + 100 year
+ * @param {number[]} props.disabledWeekDays Disabled specifics days (0-6) 
+ * @param {string[]} props.reservedDates Disabled specifics Dates
+ * @param {Record<string, string[]>} props.reservedDatesTimes Disabled specifics Times at specifics Dates
+ * @param {string} props.minDayHour Minimum Hour selectable
+ * @param {string} props.maxDayHour Maximum Hout Selectable
+ * @param {number} props.hourStep Hour step increment
+ * @callback props.onUpdateDate Return selected Date value on update
+ * @returns {ReactElement} DatePicker
+ */
 export default function DateTimePicker(props: {
-    datePicker: boolean
-    timePicker: boolean
+    datePicker?: boolean
+    timePicker?: boolean
     defaultDate?: Date
     minDate?: Date
     maxDate?: Date
     disabledWeekDays?: number[]
     reservedDates?: string[]
-    reservedDatesTimes?: Record<string, string[]> | null
+    reservedDatesTimes?: Record<string, string[]>
     minDayHour?: string
     maxDayHour?: string
     hourStep?: number
-    onUpdatedDate?: (date: Date) => void
+    onUpdatedDate: (date: Date) => void
 },): ReactElement {
 
-    const defaultDate: Date = props.defaultDate || new Date()
-    const inputElt = document.getElementById('datetime_input')
-    const tableElt = document.getElementById('controls_container');
 
+    const defaultDate: Date = props.defaultDate || new Date()
     const hourSteps: number = props.hourStep && props.hourStep > 0 ? props.hourStep : 30
     const minDayHour: string = props.minDayHour || '00:00'
     const maxDayHour: string = props.maxDayHour || '23:59'
     const disabledWeekDays = props.disabledWeekDays || []
     const minDate = props.minDate || new Date(defaultDate.getFullYear() - 100, 0, 0)
     const maxDate = props.maxDate || new Date(defaultDate.getFullYear() + 100, 0, 0)
+
     const [isCalendarShow, showCalendar] = useState<boolean>(false);
     const [searchMonth, setSearchMonth] = useState<number>(defaultDate.getMonth())
     const [searchYear, setSearchYear] = useState<number>(defaultDate.getFullYear())
     const [date, setDate] = useState<Date>()
+    const handleUpdateDate: ((date: Date) => void) = props.onUpdatedDate
 
     useEffect(() => {
+        const inputElt = document.getElementById('datetime_input')
+        const tableElt = document.getElementById('controls_container');
+        // Show / Hide Picker
         isCalendarShow ? tableElt?.classList.add('show') : tableElt?.classList.remove('show')
 
         if (date) {
             inputElt?.setAttribute('value', date.toLocaleString())
-            if (props.onUpdatedDate) {
-                props.onUpdatedDate(date)
-            }
+            handleUpdateDate(date)
         }
 
+        // Prevent search month overflow
         if (0 > searchMonth) {
             setSearchYear(searchYear - 1)
             setSearchMonth(11)
@@ -52,7 +71,7 @@ export default function DateTimePicker(props: {
             setSearchYear(searchYear + 1)
             setSearchMonth(0)
         }
-    }, [isCalendarShow, searchMonth, date])
+    }, [isCalendarShow, searchYear, searchMonth, date, handleUpdateDate])
 
     return (
         <div id="datetime">
@@ -63,8 +82,8 @@ export default function DateTimePicker(props: {
             }}></input>
 
             <div id="controls_container">
-                {props.datePicker ? (
 
+                {props.datePicker ? (
                     <Controls
                         defaultDate={defaultDate}
                         searchMonth={searchMonth}
@@ -82,6 +101,7 @@ export default function DateTimePicker(props: {
                         }}
                     />
                 ) : null}
+
                 <div className='body_controls'>
                     {props.datePicker ? (
                         <table>
@@ -93,7 +113,7 @@ export default function DateTimePicker(props: {
                                 maxDate={maxDate}
                                 disabledWeekDays={disabledWeekDays}
                                 reservedDates={props.reservedDates || null}
-                                handleClick={(current: Date) => {
+                                handleClickDate={(current: Date) => {
                                     setDate(current)
                                     if (!props.timePicker) {
                                         showCalendar(false)
