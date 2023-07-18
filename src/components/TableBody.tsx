@@ -1,11 +1,55 @@
+/**
+ * TableBody
+ * @param {PropsWithoutRef} props
+ * @param {number} props.searchMonth Month Search number (0-11)
+ * @param {number} props.searchYear Year Search
+ * @param {Date} props.minDate Minimim Date value
+ * @param {Date} props.maxDate Maximum Date Value
+ * @param {number} props.disabledWeekDays Disabled specifics days (0-6) 
+ * @param {number} props.reservedDates Disabled specifics Dates
+ * @callback props.HandleClickDate 
+ * @returns {ReactElement} TableBody
+ */
 export default function TableBody(props: {
-    month: number,
-    year: number,
-    handleClick: Function
+    searchMonth: number
+    searchYear: number
+    minDate: Date
+    maxDate: Date
+    disabledWeekDays: number[]
+    reservedDates: string[] | null
+    handleClickDate: Function
 }) {
 
-    const lastDayOfPrevMonth = new Date(props.year, props.month, 0)
+    const lastDayOfPrevMonth = new Date(props.searchYear, props.searchMonth, 0)
     const today = new Date()
+
+    /**
+     * Verify if target Date can be selected
+     * @param {Date} targetDate Date to check
+     * @returns {boolean}
+     */
+    function isDateSelectable(targetDate: Date): boolean {
+        // Check for disabled days of week
+        if (props.disabledWeekDays.includes(targetDate.getUTCDay())) {
+            return false
+        }
+        // Check for minimum & maximum Dates allowed
+        else if (targetDate < props.minDate ||
+            targetDate > props.maxDate) {
+            return false
+        }
+        // Check for reserved Dates
+        else if (props.reservedDates) {
+            const isDateReserved = props.reservedDates.find((val) => {
+                return val === targetDate.toLocaleDateString()
+            })
+            if (isDateReserved) {
+                return false
+            }
+        }
+        // Date is selectable
+        return true
+    }
 
     return (
         <tbody>
@@ -14,21 +58,26 @@ export default function TableBody(props: {
 
                 const daysItems = []
 
-                // for each frDays on the week
+                // for each days on the week
                 for (let col = 0; col < 7; col++) { // COLS
+                    // Define Date to draw
                     const currentDate = new Date(
-                        props.year,
-                        props.month,
-                        (row * 7 + col) - lastDayOfPrevMonth.getDay() + 1
+                        props.searchYear,
+                        props.searchMonth,
+                        (row * 7 + col) - lastDayOfPrevMonth.getDay() + 1,
                     )
+                    // Check if date can be selected
+                    const isSelectable: boolean = isDateSelectable(currentDate)
 
                     daysItems.push(
                         <td key={'currentDate' + row + col}
-                            className={`selectable ${currentDate.getMonth() !== props.month ? 'month_out' :
-                                currentDate.toDateString() === today.toDateString() ? 'current_day' : ''}
+                            className={`
+                            ${isSelectable ? 'selectable' : ''}
+                            ${currentDate.getMonth() !== props.searchMonth ? 'month_out' :
+                                    currentDate.toDateString() === today.toDateString() ? 'current_day' : ''}
               `}
                             onClick={() => {
-                                props.handleClick(currentDate)
+                                if (isSelectable) props.handleClickDate(currentDate)
                             }}
                         >
                             {currentDate.getDate()}
@@ -36,7 +85,7 @@ export default function TableBody(props: {
                 }
 
                 return (
-                    <tr>
+                    <tr key={row}>
                         {daysItems.map((item) => {
                             return item
                         })}

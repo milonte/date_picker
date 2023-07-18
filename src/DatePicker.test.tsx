@@ -1,9 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import DatePicker from './DatePicker';
+import DateTimePicker from './DateTimePicker';
 
 test('renders learn react link', () => {
-  render(<DatePicker type='datetime' />);
+  render(<DateTimePicker datePicker timePicker
+    onUpdatedDate={() => { }} />);
   const linkElement = screen.getByText(/learn react/i);
   expect(linkElement).toBeInTheDocument();
 });
