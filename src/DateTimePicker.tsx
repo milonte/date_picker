@@ -60,7 +60,12 @@ export default function DateTimePicker(props: {
         isCalendarShow ? tableElt?.classList.add('show') : tableElt?.classList.remove('show')
 
         if (date) {
-            inputElt?.setAttribute('value', date.toLocaleString())
+            const inputValue: string[] = [
+                props.datePicker ? date.toLocaleDateString() : '',
+                props.timePicker ? date.toLocaleTimeString() : ''
+            ]
+
+            inputElt?.setAttribute('value', inputValue.join(' ').trim())
             handleUpdateDate(date)
         }
 
