@@ -56,6 +56,7 @@ export default function TimePicker(props: {
         // Time is selectable
         return true
     }
+
     return (
         <div className='hours_container'>
             {[[Array.from({ length: 24 * steps }, (_, i) => {
@@ -67,8 +68,12 @@ export default function TimePicker(props: {
                 return <div key={timeString}
                     className={`hour 
                     ${isSelectable ? 'selectable' : ''}`}
-                    onClick={() => {
+                    onClick={(elt) => {
                         if (isSelectable) {
+                            elt.currentTarget.parentElement?.querySelector('.selected')
+                                ?.classList.remove('selected')
+                            elt.currentTarget.classList.add('selected')
+
                             props.handleClick(hour, minutes)
                         }
                     }

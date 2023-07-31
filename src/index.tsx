@@ -21,6 +21,7 @@ const reservedDates: string[] = [
 root.render(
   <React.StrictMode>
     <DatePicker datePicker timePicker hourStep={15}
+      width={100}
       minDate={new Date(2023, 6, 10)}
       maxDate={new Date(2024, 6, 11)}
       minDayHour='18:52'

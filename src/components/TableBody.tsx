@@ -71,13 +71,18 @@ export default function TableBody(props: {
 
                     daysItems.push(
                         <td key={'currentDate' + row + col}
-                            className={`
+                            className={`date 
                             ${isSelectable ? 'selectable' : ''}
                             ${currentDate.getMonth() !== props.searchMonth ? 'month_out' :
-                                    currentDate.toDateString() === today.toDateString() ? 'current_day' : ''}
+                                    currentDate.toDateString() === today.toDateString() ? 'current_day selected' : ''}
               `}
-                            onClick={() => {
-                                if (isSelectable) props.handleClickDate(currentDate)
+                            onClick={(elt) => {
+                                if (isSelectable) {
+                                    elt.currentTarget.offsetParent?.querySelector('.selected')
+                                        ?.classList.remove('selected')
+                                    elt.currentTarget.classList.add('selected')
+                                } props.handleClickDate(currentDate)
+
                             }}
                         >
                             {currentDate.getDate()}

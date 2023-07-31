@@ -1,3 +1,5 @@
+import { faChevronCircleLeft, faChevronCircleRight, faChevronLeft, faChevronRight, faClose, faCoffee, faHome } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { ReactElement } from "react"
 
 
@@ -32,11 +34,15 @@ export default function Controls(props: {
 
     return (
         <div className='header_controls'>
-            <div className='left' onClick={() => props.handleChangeMonth(props.searchMonth - 1)}>Prev</div>
+            <div className='left' onClick={() => props.handleChangeMonth(props.searchMonth - 1)}>
+                <FontAwesomeIcon icon={faChevronLeft} />
+            </div>
             <div className='home' onClick={() => {
                 props.handleChangeMonth(props.defaultDate.getMonth())
                 props.handleChangeYear(props.defaultDate.getFullYear())
-            }}>Home</div>
+            }}>
+                <FontAwesomeIcon icon={faHome} />
+            </div>
 
             <select className='month_select' value={props.searchMonth}
                 onChange={(e) => { props.handleChangeMonth(Number(e.target.value)) }}>
@@ -44,7 +50,6 @@ export default function Controls(props: {
                     return <option key={key} value={key}>{mo}</option>
                 })}
             </select>
-            -
             <select className='year_select' value={props.searchYear}
                 onChange={(e) => { props.handleChangeYear(Number(e.target.value)) }}>
                 {[[Array.from(
@@ -54,8 +59,12 @@ export default function Controls(props: {
                         return <option key={value} value={value}>{value}</option>
                     })]]}
             </select>
-            <div className='right' onClick={() => props.handleChangeMonth(props.searchMonth + 1)}>Next</div>
-            <div className='close' onClick={() => props.handleClickClose()}>Close</div>
+            <div className='right' onClick={() => props.handleChangeMonth(props.searchMonth + 1)}>
+                <FontAwesomeIcon icon={faChevronRight} />
+            </div>
+            <div className='close' onClick={() => props.handleClickClose()}>
+                <FontAwesomeIcon icon={faClose} />
+            </div>
         </div>
     )
 }

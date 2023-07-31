@@ -10,6 +10,7 @@ import Controls from './components/Controls';
  * @param {Object} props
  * @param {boolean} props.datePicker Enable DatePicker | true
  * @param {boolean} props.timePicker Enable TimePicker | true
+ * @param {number} props.width Input Width
  * @param {Date} props.defaultDate Default  selected Date | now
  * @param {Date} props.minDate Minimim Date value | now - 100 year
  * @param {Date} props.maxDate Maximum Date Value | now + 100 year
@@ -25,6 +26,7 @@ import Controls from './components/Controls';
 export default function DateTimePicker(props: {
     datePicker?: boolean
     timePicker?: boolean
+    width?: number
     defaultDate?: Date
     minDate?: Date
     maxDate?: Date
@@ -36,7 +38,6 @@ export default function DateTimePicker(props: {
     hourStep?: number
     onUpdatedDate: (date: Date) => void
 },): ReactElement {
-
 
     const defaultDate: Date = props.defaultDate || new Date()
     const hourSteps: number = props.hourStep && props.hourStep > 0 ? props.hourStep : 30
@@ -76,10 +77,11 @@ export default function DateTimePicker(props: {
     return (
         <div id="datetime">
 
-            <input type='text' id="datetime_input" onFocus={(e) => {
-                e.preventDefault()
-                showCalendar(true)
-            }}></input>
+            <input type='text' id="datetime_input" style={{ width: props.width }}
+                onFocus={(e) => {
+                    e.preventDefault()
+                    showCalendar(true)
+                }}></input>
 
             <div id="controls_container">
 
@@ -102,7 +104,7 @@ export default function DateTimePicker(props: {
                     />
                 ) : null}
 
-                <div className='body_controls'>
+                <div className='body_controls' style={{ width: props.width }}>
                     {props.datePicker ? (
                         <table>
                             <TableHeader />
