@@ -1,9 +1,9 @@
-import { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
+import TableHeader from './TableHeader';
+import TableBody from './TableBody';
+import TimePicker from './TimePicker';
+import Controls from './Controls';
 import './styles/datepicker.scss';
-import TableHeader from './components/TableHeader';
-import TableBody from './components/TableBody';
-import TimePicker from './components/TimePicker';
-import Controls from './components/Controls';
 
 /**
  * DatePTimePicker
