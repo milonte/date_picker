@@ -3,7 +3,6 @@ import TableHeader from './TableHeader';
 import TableBody from './TableBody';
 import TimePicker from './TimePicker';
 import Controls from './Controls';
-import './styles/datepicker.scss';
 
 /**
  * DatePTimePicker

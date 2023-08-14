@@ -4,16 +4,16 @@ $inputPaddingX: 2px;
 $inputPaddingY: 1px;
 $inputBorderWidth: 2px;
 
-#datetime_input {
-    position: relative;
-    width: $inputWidth;
-    height: $inputHeight;
-    border: $inputBorderWidth solid #ccc;
-}
 
 #datetime {
-
+    position: relative;
     background-color: attr(data-height);
+
+    #datetime_input {
+        width: $inputWidth;
+        height: $inputHeight;
+        border: $inputBorderWidth solid #ccc;
+    }
 
     #controls_container {
         display: flex;
@@ -23,7 +23,7 @@ $inputBorderWidth: 2px;
         justify-content: center;
         align-items: center;
         top: calc($inputHeight + 6px);
-        left: 0;
+        left: 0px;
         display: none;
         background-color: white;
         box-shadow: 1px 1px 3px 0px rgba($color: #000000, $alpha: .3);

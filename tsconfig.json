@@ -16,11 +16,10 @@
     "module": "ES6",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": false,
     "declaration": true,
-    "declarationMap": true,
-    "outDir": "./dist",
+    "emitDeclarationOnly": true,
+    "outFile": "./dist/index.d.ts",
     "jsx": "react-jsx"
   },
   "include": [
