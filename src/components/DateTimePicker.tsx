@@ -23,6 +23,7 @@ import Controls from './Controls';
  * @returns {ReactElement} DatePicker
  */
 export default function DateTimePicker(props: {
+    id?: string
     datePicker?: boolean
     timePicker?: boolean
     width?: number
@@ -35,9 +36,9 @@ export default function DateTimePicker(props: {
     minDayHour?: string
     maxDayHour?: string
     hourStep?: number
-    onUpdatedDate: (date: Date) => void
+    onUpdatedDate?: (date: Date) => void
 },): ReactElement {
-
+    const id: string = props.id || (Math.random() + 1).toString(36).substring(2)
     const defaultDate: Date = props.defaultDate || new Date()
     const hourSteps: number = props.hourStep && props.hourStep > 0 ? props.hourStep : 30
     const minDayHour: string = props.minDayHour || '00:00'
@@ -50,11 +51,11 @@ export default function DateTimePicker(props: {
     const [searchMonth, setSearchMonth] = useState<number>(defaultDate.getMonth())
     const [searchYear, setSearchYear] = useState<number>(defaultDate.getFullYear())
     const [date, setDate] = useState<Date>()
-    const handleUpdateDate: ((date: Date) => void) = props.onUpdatedDate
+    const handleUpdateDate = props.onUpdatedDate || null
 
     useEffect(() => {
-        const inputElt = document.getElementById('datetime_input')
-        const tableElt = document.getElementById('controls_container');
+        const inputElt = document.getElementById(`${id}_input`)
+        const tableElt = document.getElementById(`${id}_picker`);
         // Show / Hide Picker
         isCalendarShow ? tableElt?.classList.add('show') : tableElt?.classList.remove('show')
 
@@ -65,7 +66,9 @@ export default function DateTimePicker(props: {
             ]
 
             inputElt?.setAttribute('value', inputValue.join(' ').trim())
-            handleUpdateDate(date)
+            if (handleUpdateDate) {
+                handleUpdateDate(date)
+            }
         }
 
         // Prevent search month overflow
@@ -79,15 +82,15 @@ export default function DateTimePicker(props: {
     }, [isCalendarShow, searchYear, searchMonth, date, handleUpdateDate])
 
     return (
-        <div id="datetime">
+        <div className="datetime">
 
-            <input type='text' id="datetime_input" style={{ width: props.width }}
+            <input type='text' id={`${id}_input`} name={id} className='datetime_input' style={{ width: props.width }}
                 onFocus={(e) => {
                     e.preventDefault()
                     showCalendar(true)
                 }}></input>
 
-            <div id="controls_container">
+            <div id={`${id}_picker`} className='datetime_picker' style={{ width: props.width }}>
 
                 {props.datePicker ? (
                     <Controls
