@@ -63,8 +63,8 @@ export default function DateTimePicker(props: {
 
         if (date) {
             const inputValue: string[] = [
-                props.datePicker ? date.toLocaleDateString() : '',
-                props.timePicker ? date.toLocaleTimeString() : ''
+                props.datePicker ? date.toDateString() : '',
+                props.timePicker ? date.toTimeString() : ''
             ]
 
             inputElt?.setAttribute('value', inputValue.join(' ').trim())
