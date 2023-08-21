@@ -1,3 +1,4 @@
+import React from "react"
 import { faChevronCircleLeft, faChevronCircleRight, faChevronLeft, faChevronRight, faClose, faCoffee, faHome } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { ReactElement } from "react"

@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function TableHeader() {
 
     const frDays: string[] = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
