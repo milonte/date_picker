@@ -56,18 +56,18 @@ export default function DateTimePicker(props: {
     const handleUpdateDate = props.onUpdatedDate || null
 
     useEffect(() => {
-        const inputElt = document.getElementById(id)
+        const inputElt = document.getElementById(id) as HTMLInputElement
         const tableElt = document.getElementById(`${id}_picker`);
         // Show / Hide Picker
         isCalendarShow ? tableElt?.classList.add('show') : tableElt?.classList.remove('show')
 
         if (date) {
-            const inputValue: string[] = [
-                props.datePicker ? date.toDateString() : '',
-                props.timePicker ? date.toTimeString() : ''
-            ]
+            const inputValue: string =
+                props.datePicker ? date.toDateString() :
+                    props.timePicker ? date.toTimeString() : ''
 
-            inputElt?.setAttribute('value', inputValue.join(' ').trim())
+            inputElt.value = inputValue
+
             if (handleUpdateDate) {
                 handleUpdateDate(date)
             }

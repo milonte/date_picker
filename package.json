@@ -1,6 +1,6 @@
 {
   "name": "@milonte/datetimepicker",
-  "version": "0.1.325",
+  "version": "0.1.326",
   "private": false,
   "main": "dist/index.ts",
   "module": "dist/index.ts",
