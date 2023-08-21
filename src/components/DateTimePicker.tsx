@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { InputHTMLAttributes, ReactElement, useEffect, useState } from 'react';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
 import TimePicker from './TimePicker';
@@ -7,6 +7,8 @@ import Controls from './Controls';
 /**
  * DatePTimePicker
  * @param {Object} props
+ * @param {string} props.id Input ID
+ * @param {string} props.form Form Name
  * @param {boolean} props.datePicker Enable DatePicker | true
  * @param {boolean} props.timePicker Enable TimePicker | true
  * @param {number} props.width Input Width
@@ -23,7 +25,7 @@ import Controls from './Controls';
  * @returns {ReactElement} DatePicker
  */
 export default function DateTimePicker(props: {
-    id?: string
+    inputNodes?: InputHTMLAttributes<HTMLInputElement>
     datePicker?: boolean
     timePicker?: boolean
     width?: number
@@ -38,7 +40,7 @@ export default function DateTimePicker(props: {
     hourStep?: number
     onUpdatedDate?: (date: Date) => void
 },): ReactElement {
-    const id: string = props.id || (Math.random() + 1).toString(36).substring(2)
+    const id: string = props.inputNodes?.id || (Math.random() + 1).toString(36).substring(2)
     const defaultDate: Date = props.defaultDate || new Date()
     const hourSteps: number = props.hourStep && props.hourStep > 0 ? props.hourStep : 30
     const minDayHour: string = props.minDayHour || '00:00'
@@ -54,7 +56,7 @@ export default function DateTimePicker(props: {
     const handleUpdateDate = props.onUpdatedDate || null
 
     useEffect(() => {
-        const inputElt = document.getElementById(`${id}_input`)
+        const inputElt = document.getElementById(id)
         const tableElt = document.getElementById(`${id}_picker`);
         // Show / Hide Picker
         isCalendarShow ? tableElt?.classList.add('show') : tableElt?.classList.remove('show')
@@ -84,7 +86,11 @@ export default function DateTimePicker(props: {
     return (
         <div className="datetime">
 
-            <input type='text' id={`${id}_input`} name={id} className='datetime_input' style={{ width: props.width }}
+            <input type='text'
+                {...props.inputNodes}
+                id={id}
+                className={`${props.inputNodes?.className} datetime_input`}
+                style={{ width: props.width }}
                 onFocus={(e) => {
                     e.preventDefault()
                     showCalendar(true)
