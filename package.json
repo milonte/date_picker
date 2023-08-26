@@ -1,11 +1,12 @@
 {
   "name": "@milonte/datetimepicker",
-  "version": "0.1.326",
+  "version": "0.1.340",
   "private": false,
   "main": "dist/index.ts",
   "module": "dist/index.ts",
   "files": [
     "dist",
+    "images",
     "README.md"
   ],
   "publishConfig": {

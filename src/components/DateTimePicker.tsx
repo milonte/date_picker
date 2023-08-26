@@ -7,10 +7,7 @@ import Controls from './Controls';
 /**
  * DatePTimePicker
  * @param {Object} props
- * @param {string} props.id Input ID
- * @param {string} props.form Form Name
- * @param {boolean} props.datePicker Enable DatePicker | true
- * @param {boolean} props.timePicker Enable TimePicker | true
+ * @param {string} props.type Type of Picker
  * @param {number} props.width Input Width
  * @param {Date} props.defaultDate Default  selected Date | now
  * @param {Date} props.minDate Minimim Date value | now - 100 year
@@ -26,8 +23,7 @@ import Controls from './Controls';
  */
 export default function DateTimePicker(props: {
     inputNodes?: InputHTMLAttributes<HTMLInputElement>
-    datePicker?: boolean
-    timePicker?: boolean
+    type?: 'date' | 'time' | 'datetime'
     width?: number
     defaultDate?: Date
     minDate?: Date
@@ -40,6 +36,7 @@ export default function DateTimePicker(props: {
     hourStep?: number
     onUpdatedDate?: (date: Date) => void
 },): ReactElement {
+
     const id: string = props.inputNodes?.id || (Math.random() + 1).toString(36).substring(2)
     const defaultDate: Date = props.defaultDate || new Date()
     const hourSteps: number = props.hourStep && props.hourStep > 0 ? props.hourStep : 30
@@ -48,6 +45,11 @@ export default function DateTimePicker(props: {
     const disabledWeekDays = props.disabledWeekDays || []
     const minDate = props.minDate || new Date(defaultDate.getFullYear() - 100, 0, 0)
     const maxDate = props.maxDate || new Date(defaultDate.getFullYear() + 100, 0, 0)
+
+    const types: string[] = ['date', 'time', 'datetime']
+    const type = props.type && types.includes(props.type) ? props.type : 'date'
+    const isDatePicker: boolean = type == 'date' || type === 'datetime'
+    const isTimePicker: boolean = type == 'time' || type === 'datetime'
 
     const [isCalendarShow, showCalendar] = useState<boolean>(false);
     const [searchMonth, setSearchMonth] = useState<number>(defaultDate.getMonth())
@@ -63,8 +65,8 @@ export default function DateTimePicker(props: {
 
         if (date) {
             const inputValue: string =
-                props.datePicker ? date.toDateString() :
-                    props.timePicker ? date.toTimeString() : ''
+                (isDatePicker ? date.toDateString() : ' ' +
+                    isTimePicker ? date.toTimeString() : '').trim()
 
             inputElt.value = inputValue
 
@@ -98,7 +100,7 @@ export default function DateTimePicker(props: {
 
             <div id={`${id}_picker`} className='datetime_picker' style={{ width: props.width }}>
 
-                {props.datePicker ? (
+                {isDatePicker ? (
                     <Controls
                         defaultDate={defaultDate}
                         searchMonth={searchMonth}
@@ -118,7 +120,7 @@ export default function DateTimePicker(props: {
                 ) : null}
 
                 <div className='body_controls' style={{ width: props.width }}>
-                    {props.datePicker ? (
+                    {isDatePicker ? (
                         <table>
                             <TableHeader />
                             <TableBody
@@ -130,14 +132,14 @@ export default function DateTimePicker(props: {
                                 reservedDates={props.reservedDates || null}
                                 handleClickDate={(current: Date) => {
                                     setDate(current)
-                                    if (!props.timePicker) {
+                                    if (!isTimePicker) {
                                         showCalendar(false)
                                     }
                                 }} />
                         </table>
                     ) : null}
 
-                    {props.timePicker ? (
+                    {isTimePicker ? (
                         <TimePicker
                             hourSteps={hourSteps}
                             minDayHour={minDayHour}

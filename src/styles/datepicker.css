@@ -33,7 +33,8 @@
         background-color: transparent;
         text-decoration: none;
         border: none;
-        text-align: right; }
+        text-align: right;
+        width: auto; }
       .datetime .datetime_picker .header_controls .left,
       .datetime .datetime_picker .header_controls .right,
       .datetime .datetime_picker .header_controls .home {
