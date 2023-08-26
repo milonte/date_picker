@@ -1,46 +1,203 @@
-# Getting Started with Create React App
+# React DateTimePicker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-## Available Scripts
+![def](../date_picker/images/def.png)
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- Select Date / Time / Datetime
+- Customize default Date
+- Disable Days / Dates / Times
+- Disabled Times for specifics Dates
+- Set Min & Max avaiable Date / Time
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Installation
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```sh
+npm install @milonte/datetimepicker
+```
 
-### `npm test`
+## How to use
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```React
+<DateTimePicker />
+```
 
-### `npm run build`
+## Props
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### type
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Define type of Picker.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Type | Default Value | Required
+------------- | ------------- | -------------
+string | 'date' | no
 
-### `npm run eject`
+Accepted values | Image
+------------- | -------------
+'date' | ![type 'date'](../date_picker/images/typeDate.png)
+'time' | IMG
+'datetime' | ![type 'datetime'](../date_picker/images/typeDateTime.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```jsx
+<DateTimePicker type={'datetime'} />
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### defaultDate
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Set the default selected date of picker
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Type | Default Value | Required
+------------- | ------------- | -------------
+Date | Date('now') | no
 
-## Learn More
+```jsx
+<DateTimePicker defaultDate={ new Date() } />
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### minDate, maxDate
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Set the minimim / maximum avaiable date
+
+Prop | Type | Default Value | Required
+------------- | ------------- | ------------- | -------------
+minDate | Date | Date('now') - 100y | no
+maxDate | Date | Date('now') + 100y | no
+
+```jsx
+<DateTimePicker
+    minDate={ new Date() }
+    maxDate={ new Date() }
+/>
+```
+
+### disabledWeekDays
+
+Disabled specifics days of week, from Monday (0) to Sunday (6)
+
+Type | Default Value | Required
+------------- | ------------- | -------------
+number[] | [] | no
+
+```jsx
+<DateTimePicker
+    // Disable Saturday and Sunday
+    disabledWeekDays={[5, 6]}
+/>
+```
+
+![disabledWeekDays](../date_picker/images/disableWeekDays.png)
+
+### reservedDates
+
+Disabled specifics Dates
+
+Type | Default Value | Required
+------------- | ------------- | -------------
+string[] | [] | no
+
+```jsx
+<DateTimePicker
+    reservedDates={[
+        '25/08/2023', '28/09/2023'
+    ]}
+/>
+```
+
+![reservedDates](../date_picker/images/reservedDates.png)
+
+### reservedDatesTimes
+
+Disabled specifics Times at specifics Dates
+
+***note:*** Only on type 'datetime' picker
+
+Type | Default Value | Required
+------------- | ------------- | -------------
+Record<string, string[]> |  | no
+
+```jsx
+<DateTimePicker
+    type='datetime'
+    reservedDatesTimes={{
+        '25/08/2023': ['10:30'],
+        '28/08/2023': ['10:30', '11:00', '11:30']
+         }}
+/>
+```
+
+![reservedDateTimes](../date_picker/images/reservedDateTimes.png)
+
+### minDayHour, maxDayHour
+
+Set the minimum / maximum Hour avaiable
+
+Prop | Type | Default Value | Required
+------------- | ------------- | ------------- | -------------
+minDayHour | string | '00:00' | no
+maxDayHour | string | '23:59' | no
+
+```jsx
+<DateTimePicker
+    minDayHour='10:15'
+    maxDayHour='14:25'
+/>
+```
+
+IMG
+
+### hourStep
+
+Set hour step increment
+
+Type | Default Value | Required
+------------- | ------------- | -------------
+number | 15 | no
+
+```jsx
+<DateTimePicker
+    // Avaiable hours = 00:00, 00:10, 00:20; etc
+    hourStep={10}
+/>
+```
+
+## Functions
+
+### onUpdateDate
+
+Return selected Date value (as Date type) on update Date
+
+```jsx
+<DateTimePicker 
+    onUpdatedDate={(date) => { 
+        console.log(date)
+        // output: Date Fri Aug 18 2023 00:00:00 GMT+0200 (heure d’été d’Europe centrale)
+    }}
+/>
+```
+
+### Working with Form
+
+If you want to use the DateTimePicker inside a form, you need to update the input attributes
+
+```jsx
+<form action="#" id="create-employee">
+    <label htmlFor="first-name">First Name</label>
+    <input type="text" id="first-name" name='first-name'
+    required minLength={2} form='create-employee' />
+
+    <label htmlFor="last-name">Last Name</label>
+    <input type="text" id="last-name" name='last-name'
+    required minLength={2} form='create-employee' />
+
+    <label htmlFor="date-of-birth">Date of Birth</label>
+    <DateTimePicker inputNodes= {{
+        id: 'date-of-birth',
+        name: 'date-of-birth',
+        form: 'create-employee',
+        required: true
+    }}
+    />
+</form>
+```
