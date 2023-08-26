@@ -1,9 +1,18 @@
 {
   "name": "@milonte/datetimepicker",
-  "version": "0.1.341",
+  "version": "0.1.343",
   "private": false,
   "main": "dist/index.ts",
   "module": "dist/index.ts",
+  "author": "milonte",
+  "keywords": [
+    "date",
+    "time",
+    "datetime",
+    "picker",
+    "react"
+  ],
+  "description": "React DateTimePicker, a React component to replace the datetime input",
   "files": [
     "dist",
     "images",
