@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-![def](../date_picker/images/def.png)
+![def](./images/def.png)
 
 ## Features
 
@@ -36,9 +36,9 @@ string | 'date' | no
 
 Accepted values | Image
 ------------- | -------------
-'date' | ![type 'date'](../date_picker/images/typeDate.png)
+'date' | ![type 'date'](./images/typeDate.png)
 'time' | IMG
-'datetime' | ![type 'datetime'](../date_picker/images/typeDateTime.png)
+'datetime' | ![type 'datetime'](./images/typeDateTime.png)
 
 ```jsx
 <DateTimePicker type={'datetime'} />
@@ -87,7 +87,7 @@ number[] | [] | no
 />
 ```
 
-![disabledWeekDays](../date_picker/images/disableWeekDays.png)
+![disabledWeekDays](./images/disableWeekDays.png)
 
 ### reservedDates
 
@@ -105,7 +105,7 @@ string[] | [] | no
 />
 ```
 
-![reservedDates](../date_picker/images/reservedDates.png)
+![reservedDates](./images/reservedDates.png)
 
 ### reservedDatesTimes
 
@@ -127,7 +127,7 @@ Record<string, string[]> |  | no
 />
 ```
 
-![reservedDateTimes](../date_picker/images/reservedDateTimes.png)
+![reservedDateTimes](./images/reservedDateTimes.png)
 
 ### minDayHour, maxDayHour
 
