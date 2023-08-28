@@ -12,29 +12,27 @@ import { ReactElement } from "react"
  * @param {number} props.searchYear Current targeted search year
  * @param {Date} props.minDate Minimim Date value 
  * @param {Date} props.maxDate Maximum Date value
- * @param {CallableFunction} props.handleClickClose Click Close button event
  * @param {CallableFunction} props.handleChangeMonth Change Month Event 
  * @param {CallableFunction} props.handleChangeYear Change Year Event 
  * @returns {ReactElement} Controls
  */
 export default function Controls(props: {
-    defaultDate: Date,
-    searchMonth: number,
-    searchYear: number,
-    minDate: Date,
-    maxDate: Date,
-    handleClickClose: Function,
-    handleChangeMonth: Function,
+    defaultDate: Date
+    searchMonth: number
+    searchYear: number
+    minDate: Date
+    maxDate: Date
+    handleChangeMonth: Function
     handleChangeYear: Function
 }): ReactElement {
 
-    const frMonths: string[] = [
-        "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    const months: string[] = [
+        "Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.",
+        "Jul.", "Aug", "Sep.", "Oct.", "Nov.", "Dec."
     ]
 
     return (
-        <div className='header_controls'>
+        <>
             <div className='left' onClick={() => props.handleChangeMonth(props.searchMonth - 1)}>
                 <FontAwesomeIcon icon={faChevronLeft} />
             </div>
@@ -47,7 +45,7 @@ export default function Controls(props: {
 
             <select className='month_select' value={props.searchMonth}
                 onChange={(e) => { props.handleChangeMonth(Number(e.target.value)) }}>
-                {frMonths.map((mo, key) => {
+                {months.map((mo, key) => {
                     return <option key={key} value={key}>{mo}</option>
                 })}
             </select>
@@ -63,9 +61,6 @@ export default function Controls(props: {
             <div className='right' onClick={() => props.handleChangeMonth(props.searchMonth + 1)}>
                 <FontAwesomeIcon icon={faChevronRight} />
             </div>
-            <div className='close' onClick={() => props.handleClickClose()}>
-                <FontAwesomeIcon icon={faClose} />
-            </div>
-        </div>
+        </>
     )
 }

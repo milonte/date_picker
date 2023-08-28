@@ -17,7 +17,7 @@ $inputBorderWidth: 2px;
         position: absolute;
         justify-content: center;
         align-items: center;
-        top: calc(#{$inputHeight} + 6px);
+        top: calc(#{$inputHeight});
         left: 0px;
         display: none;
         background-color: white;
@@ -25,6 +25,36 @@ $inputBorderWidth: 2px;
 
         min-height: 50px;
         min-width: calc(#{$inputWidth} + #{$inputPaddingX} * 2 + #{$inputBorderWidth} * 2)+20 !important;
+
+        &.time {
+            .header_controls {
+                margin: 2px;
+                margin-right: 15px;
+                justify-content: end;
+            }
+
+            .body_controls {
+                padding-top: 0;
+            }
+        }
+
+        &.date,
+        &.datetime {
+            .header_controls {
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+
+            .close {
+                margin: 0;
+            }
+        }
+
+        &.datetime {
+            .hours_container {
+                margin-top: 10px;
+            }
+        }
 
         &.show {
             display: flex;
@@ -39,7 +69,8 @@ $inputBorderWidth: 2px;
             height: 30px;
             font-size: 20px;
             color: rgba($color: #000000, $alpha: .8);
-            margin: 5px 10px;
+            margin: 0 5px;
+            margin-top: 10px;
             align-items: center;
 
             select {
@@ -48,6 +79,13 @@ $inputBorderWidth: 2px;
                 border: none;
                 text-align: right;
                 width: auto;
+            }
+
+            .left,
+            .right,
+            .home,
+            .close {
+                cursor: pointer;
             }
 
             .left,
@@ -62,10 +100,20 @@ $inputBorderWidth: 2px;
             flex-direction: row;
             justify-content: space-around;
             align-items: center;
-            min-width: calc(#{$inputWidth} + #{$inputPaddingX} * 2 + #{$inputBorderWidth} * 2) !important;
+            padding: 10px;
+
+            .separator {
+                width: 1px;
+                height: 175px;
+                margin: 0 10px;
+                background-color: rgba(#000, .3);
+                margin-top: 15px;
+            }
 
             thead {
                 font-weight: bold;
+                font-size: 11px;
+                margin-bottom: 3px;
             }
 
             .date {
@@ -80,6 +128,7 @@ $inputBorderWidth: 2px;
             .date,
             .hour {
                 background-color: rgba($color: #000000, $alpha: .05);
+                text-align: center;
 
                 &:not(.selectable) {
                     color: rgba($color: #000000, $alpha: .6);
@@ -102,7 +151,6 @@ $inputBorderWidth: 2px;
                 background-color: cyan;
             }
 
-
             .current_day {
                 font-weight: bold;
             }
@@ -113,9 +161,10 @@ $inputBorderWidth: 2px;
 
             .hours_container {
                 justify-content: center;
-                text-align: left;
-                height: 150px;
-                overflow: scroll;
+                height: 175px;
+                overflow-y: scroll;
+                scroll-snap-type: y;
+                scroll-margin-left: 5px;
 
                 .current_hour {
                     background-color: cyan;

@@ -3,6 +3,8 @@ import TableHeader from './TableHeader';
 import TableBody from './TableBody';
 import TimePicker from './TimePicker';
 import Controls from './Controls';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * DatePTimePicker
@@ -36,7 +38,6 @@ export default function DateTimePicker(props: {
     hourStep?: number
     onUpdatedDate?: (date: Date) => void
 },): ReactElement {
-
     const id: string = props.inputNodes?.id || (Math.random() + 1).toString(36).substring(2)
     const defaultDate: Date = props.defaultDate || new Date()
     const hourSteps: number = props.hourStep && props.hourStep > 0 ? props.hourStep : 30
@@ -64,11 +65,11 @@ export default function DateTimePicker(props: {
         isCalendarShow ? tableElt?.classList.add('show') : tableElt?.classList.remove('show')
 
         if (date) {
-            const inputValue: string =
-                (isDatePicker ? date.toDateString() : ' ' +
-                    isTimePicker ? date.toTimeString() : '').trim()
+            const inputValue: string[] = [];
+            if (isDatePicker) inputValue.push(date.toDateString())
+            if (isTimePicker) inputValue.push(date.toTimeString().split(' GMT')[0])
 
-            inputElt.value = inputValue
+            inputElt.value = inputValue.join(' ')
 
             if (handleUpdateDate) {
                 handleUpdateDate(date)
@@ -91,33 +92,36 @@ export default function DateTimePicker(props: {
             <input type='text'
                 {...props.inputNodes}
                 id={id}
-                className={`${props.inputNodes?.className} datetime_input`}
+                className={`${props.inputNodes?.className ?
+                    props.inputNodes?.className : ''
+                    } datetime_input`}
                 style={{ width: props.width }}
                 onFocus={(e) => {
                     e.preventDefault()
                     showCalendar(true)
                 }}></input>
 
-            <div id={`${id}_picker`} className='datetime_picker' style={{ width: props.width }}>
-
-                {isDatePicker ? (
-                    <Controls
-                        defaultDate={defaultDate}
-                        searchMonth={searchMonth}
-                        searchYear={searchYear}
-                        minDate={minDate}
-                        maxDate={maxDate}
-                        handleChangeMonth={(month: number) => {
-                            setSearchMonth(month)
-                        }}
-                        handleChangeYear={(year: number) => {
-                            setSearchYear(year)
-                        }}
-                        handleClickClose={() => {
-                            showCalendar(false)
-                        }}
-                    />
-                ) : null}
+            <div id={`${id}_picker`} className={`${type} datetime_picker`} style={{ width: props.width }}>
+                <div className='header_controls'>
+                    {isDatePicker ?
+                        <Controls
+                            defaultDate={defaultDate}
+                            searchMonth={searchMonth}
+                            searchYear={searchYear}
+                            minDate={minDate}
+                            maxDate={maxDate}
+                            handleChangeMonth={(month: number) => {
+                                setSearchMonth(month)
+                            }}
+                            handleChangeYear={(year: number) => {
+                                setSearchYear(year)
+                            }}
+                        />
+                        : null}
+                    <div className='close' onClick={() => showCalendar(false)}>
+                        <FontAwesomeIcon icon={faClose} />
+                    </div>
+                </div>
 
                 <div className='body_controls' style={{ width: props.width }}>
                     {isDatePicker ? (
@@ -138,6 +142,10 @@ export default function DateTimePicker(props: {
                                 }} />
                         </table>
                     ) : null}
+
+                    {isDatePicker && isTimePicker ?
+                        <div className='separator'></div>
+                        : null}
 
                     {isTimePicker ? (
                         <TimePicker

@@ -9,13 +9,26 @@
     position: absolute;
     justify-content: center;
     align-items: center;
-    top: calc(25px + 6px);
+    top: calc(25px);
     left: 0px;
     display: none;
     background-color: white;
     box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.3);
     min-height: 50px;
     min-width: calc(250px + 2px * 2 + 2px * 2)20 !important; }
+    .datetime .datetime_picker.time .header_controls {
+      margin: 2px;
+      margin-right: 15px;
+      justify-content: end; }
+    .datetime .datetime_picker.time .body_controls {
+      padding-top: 0; }
+    .datetime .datetime_picker.date .header_controls, .datetime .datetime_picker.datetime .header_controls {
+      margin-left: 5px;
+      margin-right: 5px; }
+    .datetime .datetime_picker.date .close, .datetime .datetime_picker.datetime .close {
+      margin: 0; }
+    .datetime .datetime_picker.datetime .hours_container {
+      margin-top: 10px; }
     .datetime .datetime_picker.show {
       display: flex;
       justify-content: center; }
@@ -27,7 +40,8 @@
       height: 30px;
       font-size: 20px;
       color: rgba(0, 0, 0, 0.8);
-      margin: 5px 10px;
+      margin: 0 5px;
+      margin-top: 10px;
       align-items: center; }
       .datetime .datetime_picker .header_controls select {
         background-color: transparent;
@@ -37,6 +51,11 @@
         width: auto; }
       .datetime .datetime_picker .header_controls .left,
       .datetime .datetime_picker .header_controls .right,
+      .datetime .datetime_picker .header_controls .home,
+      .datetime .datetime_picker .header_controls .close {
+        cursor: pointer; }
+      .datetime .datetime_picker .header_controls .left,
+      .datetime .datetime_picker .header_controls .right,
       .datetime .datetime_picker .header_controls .home {
         font-size: 15px; }
     .datetime .datetime_picker .body_controls {
@@ -44,9 +63,17 @@
       flex-direction: row;
       justify-content: space-around;
       align-items: center;
-      min-width: calc(250px + 2px * 2 + 2px * 2) !important; }
+      padding: 10px; }
+      .datetime .datetime_picker .body_controls .separator {
+        width: 1px;
+        height: 175px;
+        margin: 0 10px;
+        background-color: rgba(0, 0, 0, 0.3);
+        margin-top: 15px; }
       .datetime .datetime_picker .body_controls thead {
-        font-weight: bold; }
+        font-weight: bold;
+        font-size: 11px;
+        margin-bottom: 3px; }
       .datetime .datetime_picker .body_controls .date {
         padding: 4px; }
       .datetime .datetime_picker .body_controls .hour {
@@ -54,7 +81,8 @@
         padding: 2px 2px; }
       .datetime .datetime_picker .body_controls .date,
       .datetime .datetime_picker .body_controls .hour {
-        background-color: rgba(0, 0, 0, 0.05); }
+        background-color: rgba(0, 0, 0, 0.05);
+        text-align: center; }
         .datetime .datetime_picker .body_controls .date:not(.selectable),
         .datetime .datetime_picker .body_controls .hour:not(.selectable) {
           color: rgba(0, 0, 0, 0.6);
@@ -73,8 +101,9 @@
         background-color: rgba(0, 186, 192, 0.5); }
       .datetime .datetime_picker .body_controls .hours_container {
         justify-content: center;
-        text-align: left;
-        height: 150px;
-        overflow: scroll; }
+        height: 175px;
+        overflow-y: scroll;
+        scroll-snap-type: y;
+        scroll-margin-left: 5px; }
         .datetime .datetime_picker .body_controls .hours_container .current_hour {
           background-color: cyan; }

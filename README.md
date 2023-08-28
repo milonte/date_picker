@@ -19,7 +19,7 @@ npm install @milonte/datetimepicker
 ## How to use
 
 ```jsx
-import DateTimePicker from '@milonte/datetimepicker'
+import DateTimePicker from '@milonte/datetimepicker/dist'
 
 function App() {
 
@@ -44,7 +44,7 @@ string | 'date' | no
 Accepted values | Image
 ------------- | -------------
 'date' | ![type 'date'](./images/typeDate.png)
-'time' | IMG
+'time' | ![type 'date'](./images/typeTime.png)
 'datetime' | ![type 'datetime'](./images/typeDateTime.png)
 
 ```jsx
@@ -166,6 +166,20 @@ number | 15 | no
 <DateTimePicker
     // Avaiable hours = 00:00, 00:10, 00:20; etc
     hourStep={10}
+/>
+```
+
+### width
+
+Input width
+
+Type | Default Value | Required
+------------- | ------------- | -------------
+number |  | no
+
+```jsx
+<DateTimePicker
+    width={300}
 />
 ```
 
