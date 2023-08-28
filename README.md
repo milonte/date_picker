@@ -18,8 +18,17 @@ npm install @milonte/datetimepicker
 
 ## How to use
 
-```React
-<DateTimePicker />
+```jsx
+import DateTimePicker from '@milonte/datetimepicker'
+
+function App() {
+
+    return(
+        // ...
+        <DateTimePicker />
+        // ...
+    )
+}
 ```
 
 ## Props
@@ -160,6 +169,25 @@ number | 15 | no
 />
 ```
 
+### inputNodes
+
+Attibutes for input field
+
+You need to update input attributes if you want [Working with Form](#working-with-form)
+
+```jsx
+<DateTimePicker
+    inputNodes={{
+        id: 'date-of-birth',
+        name: 'date-of-birth',
+        form: 'create-employee',
+        required: true
+    }}
+/>
+```
+
+[List of input attibutes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attributes)
+
 ## Functions
 
 ### onUpdateDate
@@ -175,7 +203,7 @@ Return selected Date value (as Date type) on update Date
 />
 ```
 
-### Working with Form
+## Working with Form
 
 If you want to use the DateTimePicker inside a form, you need to update the input attributes
 
