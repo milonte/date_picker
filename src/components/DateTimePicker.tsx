@@ -11,6 +11,7 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
  * @param {Object} props
  * @param {string} props.type Type of Picker
  * @param {number} props.width Input Width
+ * @param {InputHTMLAttributes<HTMLInputElement>} props.inputNodes HTML Input Attributes
  * @param {Date} props.defaultDate Default  selected Date | now
  * @param {Date} props.minDate Minimim Date value | now - 100 year
  * @param {Date} props.maxDate Maximum Date Value | now + 100 year
@@ -24,9 +25,9 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
  * @returns {ReactElement} DatePicker
  */
 export default function DateTimePicker(props: {
-    inputNodes?: InputHTMLAttributes<HTMLInputElement>
-    type?: 'date' | 'time' | 'datetime'
+    type?: string
     width?: number
+    inputNodes?: InputHTMLAttributes<HTMLInputElement>
     defaultDate?: Date
     minDate?: Date
     maxDate?: Date

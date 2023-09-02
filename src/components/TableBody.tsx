@@ -82,7 +82,8 @@ export default function TableBody(props: {
                                     elt.currentTarget.offsetParent?.querySelector('.selected')
                                         ?.classList.remove('selected')
                                     elt.currentTarget.classList.add('selected')
-                                } props.handleClickDate(currentDate)
+                                    props.handleClickDate(currentDate)
+                                }
 
                             }}
                         >
