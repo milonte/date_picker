@@ -1,5 +1,7 @@
 # React DateTimePicker
 
+React DateTimePicker, a React component to replace the datetime input
+
 ![def](./images/def.png)
 
 ## Features
@@ -9,6 +11,10 @@
 - Disable Days / Dates / Times
 - Disabled Times for specifics Dates
 - Set Min & Max avaiable Date / Time
+
+## Prerequisites
+
+[Create React App](https://github.com/facebook/create-react-app)
 
 ## Installation
 
@@ -107,7 +113,7 @@ string[] | [] | no
 ```jsx
 <DateTimePicker
     reservedDates={[
-        '25/08/2023', '28/09/2023'
+        '25/09/2023', '28/09/2023'
     ]}
 />
 ```
